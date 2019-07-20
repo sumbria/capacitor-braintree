@@ -48,7 +48,7 @@ public class BraintreePlugin: CAPPlugin {
         if disabled!.contains("venmo") {
             request.venmoDisabled = true;
         }
-        if disabled!.contains("apple-pay") {
+        if disabled!.contains("applePay") {
             request.applePayDisabled = true;
         }
         if disabled!.contains("card") {

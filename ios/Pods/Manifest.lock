@@ -53,17 +53,14 @@ DEPENDENCIES:
   - Braintree/PayPal
   - Braintree/Venmo
   - BraintreeDropIn
-  - "Capacitor (from `../node_modules/@capacitor/ios`)"
+  - Capacitor
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Braintree
     - BraintreeDropIn
+    - Capacitor
     - CapacitorCordova
-
-EXTERNAL SOURCES:
-  Capacitor:
-    :path: "../node_modules/@capacitor/ios"
 
 SPEC CHECKSUMS:
   Braintree: ad6016e96c67c15a2c34b7e1eec87004560df618
@@ -71,6 +68,6 @@ SPEC CHECKSUMS:
   Capacitor: f245413edff86ebf3d18bf76cadaee4be58b4a04
   CapacitorCordova: 25811fd90c0ea23ea135a42a217d1918873fa566
 
-PODFILE CHECKSUM: 7876cac06bcd8a8631e1ffb519661a6bbcf1b3ad
+PODFILE CHECKSUM: 63c3b6efa2f39a3e3102f1cedf8d2371aba5b72c
 
 COCOAPODS: 1.7.5

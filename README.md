@@ -9,7 +9,7 @@ $ npm i capacitor-braintree
 
 ## iOS configuration
 
-Add the following in the `Info.plist` file:
+Add the following in the `ios/App/App/info.plist` file:
 
 ```xml
 <key>CFBundleURLTypes</key>

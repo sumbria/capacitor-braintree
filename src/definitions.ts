@@ -1,6 +1,6 @@
-declare module "@capacitor/core" {
+declare global {
   interface PluginRegistry {
-    BraintreePlugin: BraintreePlugin;
+    BraintreePlugin?: BraintreePlugin;
   }
 
 }
