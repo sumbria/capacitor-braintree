@@ -1,6 +1,6 @@
 {
   "name": "capacitor-braintree",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A Capacitor plugin for the Braintree mobile payment processing SDK",
   "main": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
