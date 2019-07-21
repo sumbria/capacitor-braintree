@@ -33,24 +33,23 @@ More information can be found here: https://developers.braintreepayments.com/gui
 ## Usage
 
 ```ts
-import { Plugins, registerWebPlugin } from '@capacitor/core';
-import { BraintreePlugin } from 'capacitor-braintree';
+import {Braintree, DropInResult} from 'capacitor-braintree';
 ...
-registerWebPlugin(BraintreePlugin);
-```
+const braintree = new Braintree();
+braintree.setToken({
+    token: token
+}).then(
+    () => {
+        braintree.showDropIn({
+            amount: '10.0'
+        }).then(
+            (payment: DropInResult) => {
+                console.log(payment);
+            }).catch((error) => {
+            console.log(error);
+        });
 
-## API
-```ts
-Plugins.BraintreePlugin.setToken(token).then(() => {
-    Plugins.BraintreePlugin.showDropIn({
-        amount: '10.0',
-        disabled: ['venmo'] // (optional) 'paypal', 'card', 'venmo', 'applePay'
-    }).then((payment) => {
-        if (payment.cancelled) {
-            console.log('Payment cancelled!');
-        } else {
-            console.log(payment);
-        }
-    });
+    }).catch((error) => {
+    console.log(error);
 });
 ```
