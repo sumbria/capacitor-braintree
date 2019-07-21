@@ -10,11 +10,18 @@ import com.getcapacitor.PluginMethod;
 public class BraintreePlugin extends Plugin {
 
     @PluginMethod()
-    public void echo(PluginCall call) {
-        String value = call.getString("value");
+    public void setToken(PluginCall call) {
+        String token = call.getString("token");
 
-        JSObject ret = new JSObject();
-        ret.put("value", value);
-        call.success(ret);
+        if (!call.getData().has("token")){
+            call.reject("A token is required.");
+            return;
+        }
+        call.resolve();
+    }
+
+    @PluginMethod()
+    public void showDropIn(PluginCall call) {
+        call.resolve();
     }
 }

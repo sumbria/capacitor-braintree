@@ -1,12 +1,19 @@
-import {Plugins} from "@capacitor/core";
-
 declare global {
     interface PluginRegistry {
-        BTPlugin?: BraintreePlugin;
+        BraintreePlugin?: IBraintreePlugin;
     }
 }
 
-export interface UIResult {
+export interface DropInToken {
+    token: string;
+}
+
+export interface DropInOptions {
+    amount: string;
+    disabled?: string[];
+}
+
+export interface DropInResult {
     cancelled: boolean;
     nonce: string;
     type: string;
@@ -35,26 +42,8 @@ export interface UIResult {
     };
 }
 
-export interface BraintreePlugin {
-    setToken(options: { token: string }): Promise<any>;
+export interface IBraintreePlugin {
+    setToken(options: DropInToken): Promise<any>;
 
-    showDropIn(options: {
-        amount: string;
-        disabled?: string[];
-    }): Promise<UIResult>
-}
-
-const {BTPlugin} = Plugins;
-
-export class Braintree implements BraintreePlugin {
-    setToken(options: { token: string }): Promise<any> {
-        return BTPlugin.setToken(options);
-    }
-
-    showDropIn(options: {
-        amount: string;
-        disabled?: string[];
-    }): Promise<UIResult> {
-        return BTPlugin.showDropIn(options);
-    }
+    showDropIn(options: DropInOptions): Promise<DropInResult>
 }

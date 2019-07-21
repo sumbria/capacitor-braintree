@@ -12,15 +12,21 @@ public class BraintreePlugin: CAPPlugin {
      * Set Braintree Switch URL
      */
     @objc func setToken(_ call: CAPPluginCall) {
+        /**
+         * Set App Switch
+         */
         let bundleIdentifier = Bundle.main.bundleIdentifier!
         BTAppSwitch.setReturnURLScheme("\(bundleIdentifier).payments")
         
-        self.token = call.getString("token") ?? ""
+        /**
+         * Assign API token
+         */
+        self.token = call.hasOption("token") ? call.getString("token") : ""
         if self.token.isEmpty {
             call.reject("A token is required.")
             return
         }
-        call.success()
+        call.resolve()
     }
     
     /**
@@ -41,18 +47,20 @@ public class BraintreePlugin: CAPPlugin {
         /**
          * Disabble Payment Methods
          */
-        let disabled = call.getArray("disabled", String.self)
-        if disabled!.contains("paypal") {
-            request.paypalDisabled = true;
-        }
-        if disabled!.contains("venmo") {
-            request.venmoDisabled = true;
-        }
-        if disabled!.contains("applePay") {
-            request.applePayDisabled = true;
-        }
-        if disabled!.contains("card") {
-            request.cardDisabled = true;
+        if call.hasOption("disabled") {
+            let disabled = call.getArray("disabled", String.self)
+            if disabled!.contains("paypal") {
+                request.paypalDisabled = true;
+            }
+            if disabled!.contains("venmo") {
+                request.venmoDisabled = true;
+            }
+            if disabled!.contains("applePay") {
+                request.applePayDisabled = true;
+            }
+            if disabled!.contains("card") {
+                request.cardDisabled = true;
+            }
         }
         
         /**
@@ -63,14 +71,15 @@ public class BraintreePlugin: CAPPlugin {
             if (error != nil) {
                 call.reject("Something went wrong.")
             } else if (result?.isCancelled == true) {
-                call.success(["cancelled": true])
+                call.resolve(["cancelled": true])
             } else if let result = result {
-                call.success(self.getPaymentMethodNonce(paymentMethodNonce: result.paymentMethod!))
+                call.resolve(self.getPaymentMethodNonce(paymentMethodNonce: result.paymentMethod!))
             }
             controller.dismiss(animated: true, completion: nil)
         }
-        self.bridge.viewController.present(dropIn!, animated: true, completion: nil)
-        
+        DispatchQueue.main.async {
+            self.bridge.viewController.present(dropIn!, animated: true, completion: nil)
+        }
     }
     
     @objc func getPaymentMethodNonce(paymentMethodNonce: BTPaymentMethodNonce) -> [String:Any] {
