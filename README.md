@@ -41,7 +41,8 @@ braintree.setToken({
 }).then(
     () => {
         braintree.showDropIn({
-            amount: '10.0'
+            amount: '10.0',
+            disabled: ['venmo'] // (optional) 'paypal', 'card', 'venmo', 'applePay'
         }).then(
             (payment: DropInResult) => {
                 console.log(payment);
