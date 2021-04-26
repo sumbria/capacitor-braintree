@@ -33,16 +33,11 @@ public class BraintreePlugin: CAPPlugin {
      * Show DropIn UI
      */
     @objc func showDropIn(_ call: CAPPluginCall) {
-        guard let amount = call.getString("amount") else {
-            call.reject("An amount is required.")
-            return;
-        }
         
         /**
          * DropIn UI Request
          */
         let request = BTDropInRequest()
-        request.amount = amount
         
         /**
          * Disabble Payment Methods
@@ -114,7 +109,7 @@ public class BraintreePlugin: CAPPlugin {
             cardNonce = paymentMethodNonce as! BTCardNonce
             response["card"] = [
                 "lastTwo": cardNonce.lastTwo!,
-                "network": cardNonce.cardNetwork
+                "network": cardNonce.cardNetwork.rawValue
             ]
         }
         
